@@ -1,7 +1,7 @@
 import {
+  AppShell,
   Button,
   ComboboxItem,
-  Container,
   Group,
   Select,
   Title,
@@ -10,11 +10,8 @@ import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
 import DogList from "../../components/DogList/DogList.component";
-import {
-  fetchAllDogs,
-  fetchBreeds,
-  fetchDogsByBreed,
-} from "../../utils/api";
+import { Navigation } from "../../components/Navigation/Navigation.component.";
+import { fetchAllDogs, fetchBreeds, fetchDogsByBreed } from "../../utils/api";
 
 interface ISearchProps {}
 
@@ -52,31 +49,49 @@ export const Search: React.FunctionComponent<ISearchProps> = () => {
   };
 
   return (
-    <Container fluid>
-      <form>
-        <Title>Dog Search</Title>
-        <Group>
-          <Select
-            label="Your favorite breed"
-            placeholder="Pick a breed"
-            data={breeds}
-            clearable
-            value={selectedBreed}
-            onChange={handleBreedChange}
-          />
+    <AppShell
+      header={{ height: 60 }}
+      navbar={{
+        width: 300,
+        breakpoint: "sm",
+      }}
+      padding="md"
+    >
+      <AppShell.Header>
+        <div>Fetch a Friend</div>
+      </AppShell.Header>
 
-          <Button
-            variant="filled"
-            color="green"
-            radius="xl"
-            rightSection={<IoSearch size={14} />}
-            onClick={handleSearchBreed}
-          >
-            Search
-          </Button>
-        </Group>
-      </form>
-      <DogList />
-    </Container>
+      <AppShell.Navbar>
+        {" "}
+        <Navigation />
+      </AppShell.Navbar>
+
+      <AppShell.Main>
+        <form>
+          <Title>Dog Search</Title>
+          <Group>
+            <Select
+              label="Your favorite breed"
+              placeholder="Pick a breed"
+              data={breeds}
+              clearable
+              value={selectedBreed}
+              onChange={handleBreedChange}
+            />
+
+            <Button
+              variant="filled"
+              color="green"
+              radius="xl"
+              rightSection={<IoSearch size={14} />}
+              onClick={handleSearchBreed}
+            >
+              Search
+            </Button>
+          </Group>
+        </form>
+        <DogList dogIds={dogIds} />
+      </AppShell.Main>
+    </AppShell>
   );
 };

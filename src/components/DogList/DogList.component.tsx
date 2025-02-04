@@ -5,7 +5,11 @@ import { Dog } from "../../types";
 import { fetchDogsByIds } from "../../utils/api";
 import { DogCard } from "../DogCard/DogCard.component";
 
-const DogList: React.FunctionComponent = () => {
+interface IDogListProps {
+  dogIds: string[];
+}
+const DogList: React.FunctionComponent<IDogListProps> = (props) => {
+  const { dogIds } = props;
   const {
     nextDogs,
     nextQuery,
@@ -28,7 +32,7 @@ const DogList: React.FunctionComponent = () => {
         .catch((error) => console.error("Error fetching dogs:", error))
         .finally(() => setLoading(false));
     }
-  }, [nextDogs]);
+  }, [dogIds, nextDogs]);
 
   // Use useMemo to apply sorting only when needed
   const sortedDogs = useMemo(() => {
@@ -52,6 +56,7 @@ const DogList: React.FunctionComponent = () => {
     });
   }, [dogs, sortOption]);
 
+  //Todo: Need to fix UI in loading state
   if (loading || loadingPagination) return <p>Loading...</p>;
   if (dogs.length === 0) return <p>No dogs found</p>;
 
