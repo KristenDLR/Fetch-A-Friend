@@ -1,67 +1,51 @@
-import { Box, Button, Grid, Group, HoverCard, Pagination, Radio } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { Box, Button, Grid, Group, HoverCard, Radio } from "@mantine/core";
+import { useEffect, useState, useMemo } from "react";
+import useDogPagination from "../../hooks/usePagination";
 import { Dog } from "../../types";
 import { fetchDogsByIds } from "../../utils/api";
 import { DogCard } from "../DogCard/DogCard.component";
 
-interface IDogListProps {
-  dogIds: string[];
-  total: number;
-}
-
-const DogList: React.FunctionComponent<IDogListProps> = (props) => {
-  const { dogIds, total } = props;
-
+const DogList: React.FunctionComponent = () => {
+  const { nextDogs, nextQuery, prevQuery, fetchDogs, loadingPagination, currentFrom } = useDogPagination();
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [sortOption, setSortOption] = useState<string>("breed-asc"); // Default sort is breed ascending
+  const [sortOption, setSortOption] = useState<string>("breed-asc");
 
+  // Fetch full dog details when nextDogs updates
   useEffect(() => {
-    if (dogIds.length > 0) {
+    if (nextDogs.length > 0) {
       setLoading(true);
-      fetchDogsByIds(dogIds)
-        .then((response) => {
-          const sortedDogs = response.sort((a, b) => {
-            let comparison = 0;
-
-            switch (sortOption) {
-              case "breed-asc":
-                comparison = a.breed.localeCompare(b.breed);
-                break;
-              case "breed-desc":
-                comparison = b.breed.localeCompare(a.breed);
-                break;
-              case "age-asc":
-                comparison = a.age - b.age;
-                break;
-              case "age-desc":
-                comparison = b.age - a.age;
-                break;
-              case "name-asc":
-                comparison = a.name.localeCompare(b.name);
-                break;
-              case "name-desc":
-                comparison = b.name.localeCompare(a.name);
-                break;
-              default:
-                break;
-            }
-
-            return comparison;
-          });
-
-          setDogs(sortedDogs);
-        })
-        .catch((error) => {
-          console.error("Error fetching dogs:", error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+      fetchDogsByIds(nextDogs)
+        // to avoid unnecessary re-render
+        .then(setDogs)
+        .catch((error) => console.error("Error fetching dogs:", error))
+        .finally(() => setLoading(false));
     }
-  }, [dogIds, sortOption]);
+  }, [nextDogs]);
 
-  if (loading) return <p>Loading...</p>;
+  // Use useMemo to apply sorting only when needed
+  const sortedDogs = useMemo(() => {
+    return [...dogs].sort((a, b) => {
+      switch (sortOption) {
+        case "breed-asc":
+          return a.breed.localeCompare(b.breed);
+        case "breed-desc":
+          return b.breed.localeCompare(a.breed);
+        case "age-asc":
+          return a.age - b.age;
+        case "age-desc":
+          return b.age - a.age;
+        case "name-asc":
+          return a.name.localeCompare(b.name);
+        case "name-desc":
+          return b.name.localeCompare(a.name);
+        default:
+          return 0;
+      }
+    });
+  }, [dogs, sortOption]);
+
+  if (loading || loadingPagination) return <p>Loading...</p>;
   if (dogs.length === 0) return <p>No dogs found</p>;
 
   return (
@@ -72,48 +56,12 @@ const DogList: React.FunctionComponent<IDogListProps> = (props) => {
             <Button>Sort</Button>
           </HoverCard.Target>
           <HoverCard.Dropdown>
-            <Radio.Group
-              label="Select your sorting preference"
-              description="Only one"
-              value={sortOption}
-            >
-              <Group align="ce" mt="xs">
-                {/* <Radio
-                  value="breed-asc"
-                  checked={sortOption === "breed-asc"}
-                  onChange={() => setSortOption("breed-asc")}
-                  label="ALL breeds (a-z)"
-                />
-                <Radio
-                  value="breed-desc"
-                  checked={sortOption === "breed-desc"}
-                  onChange={() => setSortOption("breed-desc")}
-                  label="ALL breeds (z-a)"
-                /> */}
-                <Radio
-                  value="age-asc"
-                  checked={sortOption === "age-asc"}
-                  onChange={() => setSortOption("age-asc")}
-                  label="Age (y -o)"
-                />
-                <Radio
-                  value="age-desc"
-                  checked={sortOption === "age-desc"}
-                  onChange={() => setSortOption("age-desc")}
-                  label="Age(o-y)"
-                />
-                <Radio
-                  value="name-asc"
-                  checked={sortOption === "name-asc"}
-                  onChange={() => setSortOption("name-asc")}
-                  label="name (a-z)"
-                />
-                <Radio
-                  value="name-desc"
-                  checked={sortOption === "name-desc"}
-                  onChange={() => setSortOption("name-desc")}
-                  label="name (z-a)"
-                />
+            <Radio.Group label="Sort by" value={sortOption} onChange={setSortOption}>
+              <Group align="center" mt="xs">
+                <Radio value="age-asc" label="Age (young to old)" />
+                <Radio value="age-desc" label="Age (old to young)" />
+                <Radio value="name-asc" label="Name (A-Z)" />
+                <Radio value="name-desc" label="Name (Z-A)" />
               </Group>
             </Radio.Group>
           </HoverCard.Dropdown>
@@ -121,13 +69,21 @@ const DogList: React.FunctionComponent<IDogListProps> = (props) => {
       </Group>
 
       <Grid grow mt="20px">
-        {dogs.map((dog) => (
+        {sortedDogs.map((dog) => (
           <Grid.Col span={3} key={dog.id}>
             <DogCard key={dog.id} dog={dog} />
           </Grid.Col>
         ))}
       </Grid>
-      <Pagination total={total || 0} color="green" radius="xl" />
+
+      <Group mt="20px">
+        <Button disabled={!prevQuery} onClick={() => fetchDogs(currentFrom - 25)}>
+          Previous
+        </Button>
+        <Button disabled={!nextQuery} onClick={() => fetchDogs(currentFrom + 25)}>
+          Next
+        </Button>
+      </Group>
     </Box>
   );
 };
