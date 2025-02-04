@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchAllDogs } from "../utils/api"; // Ensure this is correctly imported
 
 interface DogPagination {
@@ -7,7 +7,7 @@ interface DogPagination {
   next: string;
 }
 
-const useDogPagination = () => {
+const usePagination = () => {
   const [nextDogs, setNextDogs] = useState<string[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [nextQuery, setNextQuery] = useState<string | null>(null);
@@ -22,7 +22,9 @@ const useDogPagination = () => {
       setNextDogs(response.resultIds);
       setTotal(response.total);
       setNextQuery(response.next || null);
-      setPrevQuery(from > 0 ? `/dogs/search?size=25&from=${Math.max(0, from - 25)}` : null);
+      setPrevQuery(
+        from > 0 ? `/dogs/search?size=25&from=${Math.max(0, from - 25)}` : null
+      );
       setCurrentFrom(from);
     } catch (error) {
       console.error("Error fetching dogs:", error);
@@ -32,10 +34,18 @@ const useDogPagination = () => {
   };
 
   useEffect(() => {
-    fetchDogs(0); 
+    fetchDogs(0);
   }, []);
 
-  return { nextDogs, total, nextQuery, prevQuery, fetchDogs, loadingPagination, currentFrom };
+  return {
+    nextDogs,
+    total,
+    nextQuery,
+    prevQuery,
+    fetchDogs,
+    loadingPagination,
+    currentFrom,
+  };
 };
 
-export default useDogPagination;
+export default usePagination;

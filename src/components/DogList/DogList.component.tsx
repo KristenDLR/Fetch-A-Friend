@@ -1,12 +1,19 @@
 import { Box, Button, Grid, Group, HoverCard, Radio } from "@mantine/core";
-import { useEffect, useState, useMemo } from "react";
-import useDogPagination from "../../hooks/usePagination";
+import { useEffect, useMemo, useState } from "react";
+import usePagination from "../../hooks/usePagination";
 import { Dog } from "../../types";
 import { fetchDogsByIds } from "../../utils/api";
 import { DogCard } from "../DogCard/DogCard.component";
 
 const DogList: React.FunctionComponent = () => {
-  const { nextDogs, nextQuery, prevQuery, fetchDogs, loadingPagination, currentFrom } = useDogPagination();
+  const {
+    nextDogs,
+    nextQuery,
+    prevQuery,
+    fetchDogs,
+    loadingPagination,
+    currentFrom,
+  } = usePagination();
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [sortOption, setSortOption] = useState<string>("breed-asc");
@@ -56,7 +63,11 @@ const DogList: React.FunctionComponent = () => {
             <Button>Sort</Button>
           </HoverCard.Target>
           <HoverCard.Dropdown>
-            <Radio.Group label="Sort by" value={sortOption} onChange={setSortOption}>
+            <Radio.Group
+              label="Sort by"
+              value={sortOption}
+              onChange={setSortOption}
+            >
               <Group align="center" mt="xs">
                 <Radio value="age-asc" label="Age (young to old)" />
                 <Radio value="age-desc" label="Age (old to young)" />
@@ -77,10 +88,16 @@ const DogList: React.FunctionComponent = () => {
       </Grid>
 
       <Group mt="20px">
-        <Button disabled={!prevQuery} onClick={() => fetchDogs(currentFrom - 25)}>
+        <Button
+          disabled={!prevQuery}
+          onClick={() => fetchDogs(currentFrom - 25)}
+        >
           Previous
         </Button>
-        <Button disabled={!nextQuery} onClick={() => fetchDogs(currentFrom + 25)}>
+        <Button
+          disabled={!nextQuery}
+          onClick={() => fetchDogs(currentFrom + 25)}
+        >
           Next
         </Button>
       </Group>

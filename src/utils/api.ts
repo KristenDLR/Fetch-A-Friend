@@ -35,17 +35,6 @@ export const fetchAllDogs= async (selectedFrom: number): Promise<{ resultIds: st
     }
   };
 
-//Function to fetch next page
-// export const fetchNextPage = async (selectedFrom: number): Promise<{resultIds: string[]}> => {
-//   try {
-//     const response = await api.get<{resultIds: string[]}>(`/dogs/search?size=25&from=${selectedFrom}"`);
-//     return {resultIds: response.data.resultIds};
-//   } catch (error) {
-//     console.error("Error fetching breeds:", error);
-//     return {resultIds: []};
-//   }
-// };
-
 // Function to fetch dogs by breed
 export const fetchDogsByBreed = async (selectedBreeds: string[]): Promise<{ resultIds: string[], total: number }> => {
   try {
