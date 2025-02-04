@@ -4,11 +4,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { AuthProvider } from "./context/AuthContext";
 import { LikedDogsProvider } from "./context/LikedDogsContext";
+import { Favorites } from "./pages/Favorites/Favorites.page";
 import { Login } from "./pages/Login/Login.page";
 import { Search } from "./pages/Search/Search.page";
 import { theme } from "./theme";
-import { Favorites } from "./pages/Favorites/Favorites.page";
-
+import { Match } from "./pages/Match/Match.page";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
               <Route path="/" element={<Login />} />
               <Route path="/search" element={<Search />} />
               <Route path="/favorites" element={<Favorites />} />
-              <Route path="/match" element={<div> match</div>} />
+              <Route path="/match" element={<Match />} />
             </Routes>
           </BrowserRouter>
         </LikedDogsProvider>
