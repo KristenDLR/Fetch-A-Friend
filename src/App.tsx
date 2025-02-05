@@ -15,7 +15,7 @@ function App() {
     <MantineProvider theme={DEFAULT_THEME}>
       <AuthProvider>
         <LikedDogsProvider>
-          <BrowserRouter>
+          <BrowserRouter basename="/Fetch-A-Friend">
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/search" element={<Search />} />
