@@ -1,0 +1,17 @@
+.header {
+    height: 60px;
+    margin-bottom: 120px;
+    background-color: var(--mantine-color-green-9);
+  }
+  
+  .inner {
+    height: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo{
+
+    max-height: 62px;
+  }

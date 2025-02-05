@@ -4,15 +4,16 @@ import {
   ComboboxItem,
   Group,
   Select,
-  Title,
+  DEFAULT_THEME as theme,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
-
-import usePagination from "../../hooks/usePagination";
 import DogList from "../../components/DogList/DogList.component";
+import { Header } from "../../components/Header/Header.component";
 import { Navigation } from "../../components/Navigation/Navigation.component.";
+import usePagination from "../../hooks/usePagination";
 import { fetchAllDogs, fetchBreeds, fetchDogsByBreed } from "../../utils/api";
+import { PageName } from "../../components/PageName/PageName.component";
 
 interface ISearchProps {}
 
@@ -61,19 +62,19 @@ export const Search: React.FunctionComponent<ISearchProps> = () => {
       padding="md"
     >
       <AppShell.Header>
-        <div>Fetch a Friend</div>
+        <Header />
       </AppShell.Header>
 
       <AppShell.Navbar>
-        {" "}
         <Navigation />
       </AppShell.Navbar>
 
       <AppShell.Main>
         <form>
-          <Title>Dog Search</Title>
-          <Group>
+          <PageName title="Dog Search" />
+          <Group justify="center" gap="xl" mb="40px">
             <Select
+              width="300px"
               label="Your favorite breed"
               placeholder="Pick a breed"
               data={breeds}
@@ -83,8 +84,9 @@ export const Search: React.FunctionComponent<ISearchProps> = () => {
             />
 
             <Button
+              mt="20px"
               variant="filled"
-              color="green"
+              color={theme.colors?.green?.[9]}
               radius="xl"
               rightSection={<IoSearch size={14} />}
               onClick={handleSearchBreed}

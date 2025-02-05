@@ -1,6 +1,15 @@
-import { Box, Button, Grid, Group, HoverCard, Radio } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Grid,
+  Group,
+  HoverCard,
+  Radio,
+  Text,
+} from "@mantine/core";
 import { useEffect, useMemo, useState } from "react";
 import usePagination from "../../hooks/usePagination";
+import {DEFAULT_THEME as theme} from "@mantine/core";
 import { Dog } from "../../types";
 import { fetchDogsByIds } from "../../utils/api";
 import { DogCard } from "../DogCard/DogCard.component";
@@ -34,7 +43,7 @@ const DogList: React.FunctionComponent<IDogListProps> = (props) => {
         .catch((error) => console.error("Error fetching nextDogs:", error))
         .finally(() => setLoading(false));
 
-      setIsNextClicked(false); 
+      setIsNextClicked(false);
     } else if (dogIds.length > 0) {
       setLoading(true);
       fetchDogsByIds(dogIds)
@@ -45,9 +54,8 @@ const DogList: React.FunctionComponent<IDogListProps> = (props) => {
         .finally(() => setLoading(false));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dogIds, nextDogs]); 
+  }, [dogIds, nextDogs]);
 
-  // Use useMemo to apply sorting only when needed
   const sortedDogs = useMemo(() => {
     return [...dogs].sort((a, b) => {
       switch (sortOption) {
@@ -76,8 +84,15 @@ const DogList: React.FunctionComponent<IDogListProps> = (props) => {
     <Box>
       <Group justify="center">
         <HoverCard width={280} shadow="md">
+          <Text> Want to refine your search?</Text>
           <HoverCard.Target>
-            <Button>Sort</Button>
+            <Button
+              variant="outline"
+              color={theme.colors?.green?.[9]}
+              radius="xl"
+            >
+              Sort
+            </Button>
           </HoverCard.Target>
           <HoverCard.Dropdown>
             <Radio.Group
@@ -96,7 +111,7 @@ const DogList: React.FunctionComponent<IDogListProps> = (props) => {
         </HoverCard>
       </Group>
 
-      <Grid grow mt="20px">
+      <Grid grow m="50px">
         {sortedDogs.map((dog) => (
           <Grid.Col span={3} key={dog.id}>
             <DogCard key={dog.id} dog={dog} />
@@ -104,14 +119,20 @@ const DogList: React.FunctionComponent<IDogListProps> = (props) => {
         ))}
       </Grid>
 
-      <Group mt="20px">
+      <Group justify="center" mt="20px" mb="400px">
         <Button
+          variant="filled"
+          color={theme.colors?.green?.[9]}
+          radius="xl"
           disabled={!prevQuery}
           onClick={() => fetchDogs(selectedBreed, currentFrom - 25)}
         >
           Previous
         </Button>
         <Button
+          variant="filled"
+          color={theme.colors?.green?.[9]}
+          radius="xl"
           disabled={!nextQuery}
           onClick={() => {
             console.log("➡️ Next button clicked");

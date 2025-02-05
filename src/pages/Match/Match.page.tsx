@@ -1,6 +1,18 @@
-import { AppShell, Box, Group, Stack, Title } from "@mantine/core";
+import {
+  AppShell,
+  Badge,
+  Card,
+  Group,
+  Image,
+  Stack,
+  Text,
+  DEFAULT_THEME as theme,
+  Title,
+} from "@mantine/core";
 import { useEffect, useState } from "react";
+import { Header } from "../../components/Header/Header.component";
 import { Navigation } from "../../components/Navigation/Navigation.component.";
+import { PageName } from "../../components/PageName/PageName.component";
 import { Dog } from "../../types";
 import { fetchAllDogs, fetchBreeds, fetchDogsByIds } from "../../utils/api";
 
@@ -70,7 +82,7 @@ export const Match = () => {
       padding="md"
     >
       <AppShell.Header>
-        <div>Fetch A Friend</div>
+        <Header />
       </AppShell.Header>
 
       <AppShell.Navbar>
@@ -79,23 +91,34 @@ export const Match = () => {
 
       <AppShell.Main>
         <Stack>
-          <Title>Match</Title>
-          <Group>
+          <PageName title="Find My Match" />
+          <Group justify="center">
             {loading ? (
               <p>Loading...</p>
             ) : dog ? (
-              <Box
-                mt="xl"
-                p="md"
-                style={{ border: "1px solid #ccc", borderRadius: "25px" }}
+              <Card
+                style={{
+                  backgroundColor: "var(--mantine-color-yellow-0)",
+                  maxWidth: "250px",
+                  minWidth: "200px",
+                }}
+                shadow="sm"
+                padding="lg"
+                radius="md"
+                withBorder
               >
+                <Card.Section>
+                  <Image fit="contain" src={dog.img} alt={dog.name} />
+                </Card.Section>
                 <Title order={3}>{dog.name}</Title>
-                <p>Breed: {dog.breed}</p>
-                <p>Age: {dog.age} years</p>
-                <img src={dog.img} alt={dog.name} style={{ width: "100%" }} />
-              </Box>
+
+                <Badge color={theme.colors?.yellow?.[6]}>{dog.breed}</Badge>
+                <Text>Age: {dog.age} years</Text>
+
+                {/* <img src={dog.img} alt={dog.name} style={{ width: "100%" }} /> */}
+              </Card>
             ) : (
-              <p>No match yet, press the button to find a dog!</p>
+              <Text>No match yet, Textress the button to find a dog!</Text>
             )}
           </Group>
         </Stack>
