@@ -2,38 +2,62 @@ import { AppShell, Box, Group, Stack, Title } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Navigation } from "../../components/Navigation/Navigation.component.";
 import { Dog } from "../../types";
-import { fetchAllDogs, fetchDogsByIds } from "../../utils/api";
+import { fetchAllDogs, fetchBreeds, fetchDogsByIds } from "../../utils/api";
 
 export const Match = () => {
   const [dog, setDog] = useState<Dog | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Function to generate a random number divisible by 25 and no higher than 1000
-  const getRandomMultipleOf25 = (max: number = 1000): number => {
+  const getRandomFrom = (max: number = 1000): number => {
     const random = Math.floor(Math.random() * (max / 25)) * 25;
+    console.log("randomFrom", random);
     return random;
   };
 
-  const fetchRandomDog = async () => {
-    setLoading(true);
-    try {
-      const randomFrom = getRandomMultipleOf25(); 
-      const dogPage = await fetchAllDogs(randomFrom); 
-      const allDogs = dogPage.resultIds; 
-      const randomDogId = allDogs[Math.floor(Math.random() * allDogs.length)]; 
+  const getRandomBreed = async () => {
+    console.log("hello");
+    const breedList = await fetchBreeds();
+    console.log("breedlist", breedList);
+    if (breedList.length === 0) return undefined;
 
-      
-      const randomDogDetails = await fetchDogsByIds([randomDogId]);
-      setDog(randomDogDetails[0]); 
-    } catch (error) {
-      console.error("Error fetching random dog:", error);
-    } finally {
-      setLoading(false);
-    }
+    const randomIndex = getRandomFrom(breedList.length);
+    console.log("randomIndex", randomIndex);
+    console.log(breedList[randomIndex]);
+
+    return { breed: breedList[randomIndex], randomIndex };
   };
 
   useEffect(() => {
+    const fetchRandomDog = async () => {
+      setLoading(true);
+
+      try {
+        const randomBreed = await getRandomBreed();
+
+        if (!randomBreed) {
+          console.error("No breed found.");
+          return;
+        }
+
+        const dogPage = await fetchAllDogs(
+          randomBreed.breed,
+          randomBreed.randomIndex
+        );
+
+        const allDogs = dogPage.resultIds;
+
+        const randomDogId = allDogs[Math.floor(Math.random() * allDogs.length)];
+
+        const randomDogDetails = await fetchDogsByIds([randomDogId]);
+        setDog(randomDogDetails[0]);
+      } catch (error) {
+        console.error("Error fetching random dog:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchRandomDog();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -60,7 +84,11 @@ export const Match = () => {
             {loading ? (
               <p>Loading...</p>
             ) : dog ? (
-              <Box mt="xl" p="md" style={{ border: "1px solid #ccc", borderRadius: '25px'}}>
+              <Box
+                mt="xl"
+                p="md"
+                style={{ border: "1px solid #ccc", borderRadius: "25px" }}
+              >
                 <Title order={3}>{dog.name}</Title>
                 <p>Breed: {dog.breed}</p>
                 <p>Age: {dog.age} years</p>

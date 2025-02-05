@@ -44,6 +44,7 @@ const DogList: React.FunctionComponent<IDogListProps> = (props) => {
         .catch((error) => console.error("Error fetching dogIds:", error))
         .finally(() => setLoading(false));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dogIds, nextDogs]); 
 
   // Use useMemo to apply sorting only when needed
