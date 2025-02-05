@@ -7,9 +7,10 @@ import { DogCard } from "../DogCard/DogCard.component";
 
 interface IDogListProps {
   dogIds: string[];
+  selectedBreed: string;
 }
 const DogList: React.FunctionComponent<IDogListProps> = (props) => {
-  const { dogIds } = props;
+  const { dogIds, selectedBreed } = props;
   const {
     nextDogs,
     nextQuery,
@@ -21,18 +22,29 @@ const DogList: React.FunctionComponent<IDogListProps> = (props) => {
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [sortOption, setSortOption] = useState<string>("breed-asc");
+  const [isNextClicked, setIsNextClicked] = useState(false);
 
-  // Fetch full dog details when nextDogs updates
   useEffect(() => {
-    if (nextDogs.length > 0) {
+    if (isNextClicked && nextDogs.length > 0) {
       setLoading(true);
       fetchDogsByIds(nextDogs)
-        // to avoid unnecessary re-render
-        .then(setDogs)
-        .catch((error) => console.error("Error fetching dogs:", error))
+        .then((response) => {
+          setDogs(response);
+        })
+        .catch((error) => console.error("Error fetching nextDogs:", error))
+        .finally(() => setLoading(false));
+
+      setIsNextClicked(false); 
+    } else if (dogIds.length > 0) {
+      setLoading(true);
+      fetchDogsByIds(dogIds)
+        .then((response) => {
+          setDogs(response);
+        })
+        .catch((error) => console.error("Error fetching dogIds:", error))
         .finally(() => setLoading(false));
     }
-  }, [dogIds, nextDogs]);
+  }, [dogIds, nextDogs]); 
 
   // Use useMemo to apply sorting only when needed
   const sortedDogs = useMemo(() => {
@@ -56,7 +68,6 @@ const DogList: React.FunctionComponent<IDogListProps> = (props) => {
     });
   }, [dogs, sortOption]);
 
-  //Todo: Need to fix UI in loading state
   if (loading || loadingPagination) return <p>Loading...</p>;
   if (dogs.length === 0) return <p>No dogs found</p>;
 
@@ -95,13 +106,17 @@ const DogList: React.FunctionComponent<IDogListProps> = (props) => {
       <Group mt="20px">
         <Button
           disabled={!prevQuery}
-          onClick={() => fetchDogs(currentFrom - 25)}
+          onClick={() => fetchDogs(selectedBreed, currentFrom - 25)}
         >
           Previous
         </Button>
         <Button
           disabled={!nextQuery}
-          onClick={() => fetchDogs(currentFrom + 25)}
+          onClick={() => {
+            console.log("➡️ Next button clicked");
+            setIsNextClicked(true);
+            fetchDogs(selectedBreed, currentFrom + 25);
+          }}
         >
           Next
         </Button>

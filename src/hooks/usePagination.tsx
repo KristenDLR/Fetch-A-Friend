@@ -15,10 +15,10 @@ const usePagination = () => {
   const [loadingPagination, setLoadingPagination] = useState<boolean>(false);
   const [currentFrom, setCurrentFrom] = useState<number>(0); // Track current pagination position
 
-  const fetchDogs = async (from: number) => {
+  const fetchDogs = async (selectedBreed: string, from: number ) => {
     setLoadingPagination(true);
     try {
-      const response: DogPagination = await fetchAllDogs(from);
+      const response: DogPagination = await fetchAllDogs(selectedBreed, from);
       setNextDogs(response.resultIds);
       setTotal(response.total);
       setNextQuery(response.next || null);
@@ -34,7 +34,7 @@ const usePagination = () => {
   };
 
   useEffect(() => {
-    fetchDogs(0);
+    fetchDogs("Affenpinscher", 0);
   }, []);
 
   return {

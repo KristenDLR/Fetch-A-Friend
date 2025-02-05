@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
+import usePagination from "../../hooks/usePagination";
 import DogList from "../../components/DogList/DogList.component";
 import { Navigation } from "../../components/Navigation/Navigation.component.";
 import { fetchAllDogs, fetchBreeds, fetchDogsByBreed } from "../../utils/api";
@@ -17,13 +18,14 @@ interface ISearchProps {}
 
 export const Search: React.FunctionComponent<ISearchProps> = () => {
   const [breeds, setBreeds] = useState<string[]>([]);
-  const [selectedBreed, setSelectedBreed] = useState<string>("");
+  const [selectedBreed, setSelectedBreed] = useState<string>("Affenpinscher");
   const [dogIds, setDogIds] = useState<string[]>([]);
+  const { currentFrom } = usePagination();
 
   // Fetch all breeds on component mount
   useEffect(() => {
     const getAllDogs = async () => {
-      const dogPage = await fetchAllDogs(0);
+      const dogPage = await fetchAllDogs(selectedBreed, currentFrom);
       setDogIds(dogPage.resultIds);
       console.log("next", dogPage.next);
     };
@@ -43,7 +45,7 @@ export const Search: React.FunctionComponent<ISearchProps> = () => {
 
   const handleSearchBreed = async () => {
     if (selectedBreed) {
-      const ids = await fetchDogsByBreed([selectedBreed]);
+      const ids = await fetchDogsByBreed([selectedBreed], currentFrom);
       setDogIds(ids.resultIds);
     }
   };
@@ -90,7 +92,7 @@ export const Search: React.FunctionComponent<ISearchProps> = () => {
             </Button>
           </Group>
         </form>
-        <DogList dogIds={dogIds} />
+        <DogList selectedBreed={selectedBreed} dogIds={dogIds} />
       </AppShell.Main>
     </AppShell>
   );
