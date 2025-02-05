@@ -1,5 +1,6 @@
 {
   "name": "fetch-a-friend",
+  "homepage": "https://kristendlr.github.io/Fetch-A-Friend/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
