@@ -1,9 +1,10 @@
-import { Box, Stack } from "@mantine/core";
+import { Box, Group, Stack } from "@mantine/core";
 
 import { useState } from "react";
 import { FaHeart, FaSearch } from "react-icons/fa";
 import { TbDog } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
+import { Footer } from "../Footer/Footer.component";
 import classes from "./Navigation.module.css";
 
 const data = [
@@ -15,19 +16,25 @@ const data = [
 export function Navigation() {
   const [active, setActive] = useState(" Search for Dogs");
 
-  //TODO: active state of nav not working
   const links = data.map((item) => (
     <NavLink
       className={classes.link}
       data-active={item.label === active || undefined}
       key={item.label}
       to={item.link}
-      style={{ textDecoration: "none" }}
+      style={({ isActive }) => ({
+        color: isActive ? "var(--mantine-color-yellow-6)" : "#fffff",
+        background: isActive
+          ? "var(--mantine-color-green-8)"
+          : "var(--mantine-color-green-9)",
+      })}
       onClick={(event) => {
         setActive(item.label);
       }}
     >
-      {item.icon} {item.label}
+      <Group justify="space-between">
+        {item.icon} {item.label}
+      </Group>
     </NavLink>
   ));
 
@@ -37,17 +44,9 @@ export function Navigation() {
         <Stack>{links}</Stack>
       </Box>
 
-        {/* Todo: Logout */}
-      {/* <Box className={classes.footer}>
-        <a
-          href="#"
-          className={classes.link}
-          onClick={(event) => event.preventDefault()}
-        >
-          <IoMdLogOut className={classes.linkIcon} />
-          <span>Logout</span>
-        </a>
-      </Box> */}
+      <Box className={classes.footer}>
+        <Footer />
+      </Box>
     </nav>
   );
 }

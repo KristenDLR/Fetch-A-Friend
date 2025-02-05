@@ -1,4 +1,12 @@
-import { Badge, Button, Card, Group, Image, Text } from "@mantine/core";
+import {
+  Badge,
+  Button,
+  Card,
+  Group,
+  Image,
+  Text,
+  DEFAULT_THEME as theme,
+} from "@mantine/core";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { useLikedDogs } from "../../context/LikedDogsContext";
 import { Dog } from "../../types";
@@ -14,7 +22,7 @@ export const DogCard: React.FunctionComponent<IDogCardProps> = (props) => {
 
   return (
     <Card
-      style={{ maxWidth: "250px", minWidth: "200px" }}
+      style={{ backgroundColor:  "var(--mantine-color-yellow-0)", maxWidth: "250px", minWidth: "200px" }}
       shadow="sm"
       padding="lg"
       radius="md"
@@ -26,7 +34,7 @@ export const DogCard: React.FunctionComponent<IDogCardProps> = (props) => {
 
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={500}>{dog.name}</Text>
-        <Badge color="green">{dog.breed}</Badge>
+        <Badge color={theme.colors?.yellow?.[6]}>{dog.breed}</Badge>
       </Group>
 
       <Group justify="space-between">
@@ -38,11 +46,8 @@ export const DogCard: React.FunctionComponent<IDogCardProps> = (props) => {
         </Text>
       </Group>
 
-      <Button
-        variant="transparent"
-        onClick={() => toggleLike(dog.id)}
-      >
-        {isLiked ? <FaHeart /> : <FaRegHeart />}
+      <Button variant="transparent" onClick={() => toggleLike(dog.id)}>
+        {isLiked ? <FaHeart color="red"/> : <FaRegHeart  color="red"/>}
       </Button>
     </Card>
   );

@@ -1,10 +1,12 @@
-import { AppShell, Group, Stack, Text, Title } from "@mantine/core";
+import { AppShell, Group, Stack, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { DogCard } from "../../components/DogCard/DogCard.component";
+import { Header } from "../../components/Header/Header.component";
 import { Navigation } from "../../components/Navigation/Navigation.component.";
 import { useLikedDogs } from "../../context/LikedDogsContext";
 import { Dog } from "../../types";
 import { fetchDogsByIds } from "../../utils/api";
+import { PageName } from "../../components/PageName/PageName.component";
 
 export const Favorites = () => {
   const { likedDogs } = useLikedDogs();
@@ -20,6 +22,7 @@ export const Favorites = () => {
 
   return (
     <AppShell
+      withBorder={false}
       header={{ height: 60 }}
       navbar={{
         width: 300,
@@ -28,7 +31,7 @@ export const Favorites = () => {
       padding="md"
     >
       <AppShell.Header>
-        <div>Fetch A Friend</div>
+        <Header />
       </AppShell.Header>
 
       <AppShell.Navbar>
@@ -37,8 +40,8 @@ export const Favorites = () => {
 
       <AppShell.Main>
         <Stack>
-          <Title>Favorites</Title>
-          <Group>
+          <PageName title="Favorites" />
+          <Group justify="center">
             {favoriteDogs.length === 0 ? (
               <Text>No liked dogs yet!</Text>
             ) : (
