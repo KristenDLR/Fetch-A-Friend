@@ -1,6 +1,48 @@
-# Getting Started with Create React App
+# Fetch A Friend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+______________
+
+1. Authentication System
+# Completed:
+* Create a login screen where users enter their name and email.
+* Send a POST request to /auth/login with the user’s credentials.
+* Handle authentication cookies (fetch-access-token) for subsequent requests.
+
+# Next Steps:
+* Provide a logout button that sends a POST request to /auth/logout.
+
+______________
+2. Dog Search Page
+* Fetch and display a list of available dogs.
+* Use the /dogs/search endpoint to retrieve dog data.
+* Ensure all fields of the Dog object (except id) are displayed.
+* Fetch the list of breeds using GET /dogs/breeds.
+* Allow users to filter search results by breed. 
+* Implement pagination using the size and from query parameters in /dogs/search.
+* Display next and previous buttons when applicable.
+
+# Next Steps: 
+* Sort results alphabetically by breed (default).
+* Allow users to toggle sorting (ascending/descending).
+
+______________
+3. Dog Favorite Page
+* Allow sorting by name or age as well.
+* Allow users to "like" or "favorite" dogs.
+* Store favorited dogs in context.
+
+______________
+4. Dog Match Page
+* Users can use the match tab to generate a random dog
+
+# Next Steps: 
+* Provide a button for users to submit their favorited dog IDs to /dogs/match.
+* Display the matched dog returned by the API.
+
+
+
+![Image of Front-end](/src/assets/FetchAFriendLogIn.png)
+
 
 ## Available Scripts
 
@@ -13,34 +55,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
