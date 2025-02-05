@@ -35,6 +35,7 @@ export const Search: React.FunctionComponent<ISearchProps> = () => {
       setBreeds(breedList);
     };
     getBreeds();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleBreedChange = (value: string | null, option: ComboboxItem) => {
