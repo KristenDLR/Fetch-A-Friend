@@ -1,19 +1,18 @@
 import {
-  AppShell,
   Button,
   ComboboxItem,
   Group,
+  Paper,
   Select,
-  DEFAULT_THEME as theme,
+  Stack,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import DogList from "../../components/DogList/DogList.component";
-import { Header } from "../../components/Header/Header.component";
-import { Navigation } from "../../components/Navigation/Navigation.component.";
-import usePagination from "../../hooks/usePagination";
-import { fetchAllDogs, fetchBreeds, fetchDogsByBreed } from "../../utils/api";
 import { PageName } from "../../components/PageName/PageName.component";
+import usePagination from "../../hooks/usePagination";
+import { theme } from "../../theme/theme";
+import { fetchAllDogs, fetchBreeds, fetchDogsByBreed } from "../../utils/api";
 
 interface ISearchProps {}
 
@@ -53,29 +52,21 @@ export const Search: React.FunctionComponent<ISearchProps> = () => {
   };
 
   return (
-    <AppShell
-      header={{ height: 60 }}
-      navbar={{
-        width: 300,
-        breakpoint: "sm",
-      }}
-      padding="md"
-    >
-      <AppShell.Header>
-        <Header />
-      </AppShell.Header>
-
-      <AppShell.Navbar>
-        <Navigation />
-      </AppShell.Navbar>
-
-      <AppShell.Main>
-        <form>
+    <Stack>
+      <form>
+        <Paper
+          style={{ backgroundColor: "var(--mantine-color-teal-1)" }}
+          withBorder
+          shadow="md"
+          p={30}
+          radius="lg"
+        >
           <PageName title="Dog Search" />
           <Group justify="center" gap="xl" mb="40px">
             <Select
-              width="300px"
-              label="Your favorite breed"
+              w="500px"
+              size="md"
+              label="Search your favorite breed"
               placeholder="Pick a breed"
               data={breeds}
               clearable
@@ -84,9 +75,9 @@ export const Search: React.FunctionComponent<ISearchProps> = () => {
             />
 
             <Button
-              mt="20px"
+              mt="30px"
               variant="filled"
-              color={theme.colors?.green?.[9]}
+              color={theme.colors?.teal?.[0]}
               radius="xl"
               rightSection={<IoSearch size={14} />}
               onClick={handleSearchBreed}
@@ -94,9 +85,9 @@ export const Search: React.FunctionComponent<ISearchProps> = () => {
               Search
             </Button>
           </Group>
-        </form>
-        <DogList selectedBreed={selectedBreed} dogIds={dogIds} />
-      </AppShell.Main>
-    </AppShell>
+        </Paper>
+      </form>
+      <DogList selectedBreed={selectedBreed} dogIds={dogIds} />
+    </Stack>
   );
 };

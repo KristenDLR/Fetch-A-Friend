@@ -1,11 +1,11 @@
 .footer {
     margin-top: 120px;
-    border-top: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
+    border-top: 1px solid;
+    border-color: var(--mantine-color-other-0);
   }
   
   .inner {
     display: flex;
-    color: "white";
     justify-content: space-between;
     align-items: center;
     padding-top: var(--mantine-spacing-xl);
