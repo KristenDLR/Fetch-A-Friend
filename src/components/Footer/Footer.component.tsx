@@ -3,11 +3,11 @@ import {
   Group,
   Stack,
   Text,
-  DEFAULT_THEME as theme,
 } from "@mantine/core";
 import { FaGithubSquare, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import classes from "./Footer.module.css";
+import { theme } from "../../theme/theme";
 
 interface IFooterProps {}
 
@@ -25,17 +25,17 @@ export const Footer: React.FunctionComponent<IFooterProps> = () => {
             m="10px"
             target="_blank"
             size="lg"
-            c={theme.colors?.green?.[8]}
+            c={theme.colors?.teal?.[3]}
             variant="subtle"
-            href="https://github.com/KristenDLR/Fetch-A-Friend"
+            href="https://github.com/KristenDLR/PawfectMatch"
           >
             <FaGithubSquare size={50} />
           </Anchor>
           <Anchor
             m="10px"
             target="_blank"
-            size="lg"
-            c={theme.colors?.green?.[8]}
+            size="md"
+            c={theme.colors?.teal?.[3]}
             variant="subtle"
             href="mailto:delarosa.kristen@gmail.com"
           >
@@ -45,8 +45,8 @@ export const Footer: React.FunctionComponent<IFooterProps> = () => {
           <Anchor
             m="10px"
             target="_blank"
-            size="lg"
-            c={theme.colors?.green?.[8]}
+            size="md"
+            c={theme.colors?.teal?.[3]}
             variant="subtle"
             href="https://www.linkedin.com/in/kris10-de-la-rosa/"
           >

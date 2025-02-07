@@ -41,7 +41,7 @@ ______________
 
 
 
-![Image of Front-end](/src/assets/FetchAFriendLogIn.png)
+![Image of Front-end](/src/assets/LoginPage.png)
 
 
 ## Available Scripts

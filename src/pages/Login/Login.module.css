@@ -1,16 +1,8 @@
 .title {
-  font-family: Greycliff CF, var(--mantine-font-family);
   font-weight: 900;
 }
 
-body {
-  min-height: 100vh;
-  background-color: var(--mantine-color-yellow-6);
-  background-image: url("../../assets/grass.png");
-  background-position: bottom;
-  background-repeat: no-repeat;
-  background-size: 100% auto; /* Adjust width to fit, height auto */
-}
+
 
 .logo {
   border-radius: 25px;

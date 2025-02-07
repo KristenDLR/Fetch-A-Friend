@@ -6,7 +6,6 @@ import {
   PasswordInput,
   TextInput,
   DEFAULT_THEME as theme,
-  Title,
 } from "@mantine/core";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -35,24 +34,22 @@ export const Login: React.FunctionComponent<ILoginProps> = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Container size={420} my={40}>
-        <Title ta="center" className={classes.title}>
-          Welcome
-        </Title>
-        <Image className={classes.logo} src={logo} />
-
+      <Container pt={20} size={420}>
         <Paper
-          style={{ backgroundColor: "var(--mantine-color-yellow-0)" }}
+          style={{ backgroundColor: "var(--mantine-color-teal-1)" }}
           withBorder
           shadow="md"
           p={30}
-          mt={30}
-          radius="md"
+          radius="lg"
         >
+          <Image className={classes.logo} src={logo} />
           <TextInput
             withAsterisk
+            size="lg"
             label="Name"
             required
+            mt="md"
+            color="var(--mantine-color-secondary-0)"
             onChange={(e) => setName(e.target.value)}
           />
           <PasswordInput
@@ -61,11 +58,13 @@ export const Login: React.FunctionComponent<ILoginProps> = () => {
             placeholder="Your email you@email.com"
             required
             mt="md"
+            c="var(--mantine-color-secondary-0)"
             onChange={(e) => setEmail(e.target.value)}
           />
 
           <Button
-            color={theme.colors?.green?.[9]}
+            variant="filled"
+            color={theme.colors?.yellow?.[6]}
             type="submit"
             fullWidth
             mt="xl"

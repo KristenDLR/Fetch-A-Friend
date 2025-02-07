@@ -8,9 +8,9 @@ import { Footer } from "../Footer/Footer.component";
 import classes from "./Navigation.module.css";
 
 const data = [
-  { link: "/search", label: " Search for Dogs", icon: <FaSearch /> },
-  { link: "/favorites", label: " Favorites", icon: <FaHeart /> },
-  { link: "/match", label: " Find My Match", icon: <TbDog /> },
+  { link: "/search", label: " Search for Dogs", icon: <FaSearch size={35}/> },
+  { link: "/favorites", label: " Favorites", icon: <FaHeart size={35}/> },
+  { link: "/match", label: " Find My Match", icon: <TbDog size={35}/> },
 ];
 
 export function Navigation() {
@@ -23,10 +23,10 @@ export function Navigation() {
       key={item.label}
       to={item.link}
       style={({ isActive }) => ({
-        color: isActive ? "var(--mantine-color-yellow-6)" : "#fffff",
+        color: isActive ? "var(--mantine-color-teal-0)" : "var(--mantine-color-teal-1)",
         background: isActive
-          ? "var(--mantine-color-green-8)"
-          : "var(--mantine-color-green-9)",
+          ? "var(--mantine-color-yellow-0)"
+          : "var(--mantine-color-teal-0)",
       })}
       onClick={(event) => {
         setActive(item.label);

@@ -9,10 +9,10 @@ import {
 } from "@mantine/core";
 import { useEffect, useMemo, useState } from "react";
 import usePagination from "../../hooks/usePagination";
-import {DEFAULT_THEME as theme} from "@mantine/core";
 import { Dog } from "../../types";
 import { fetchDogsByIds } from "../../utils/api";
 import { DogCard } from "../DogCard/DogCard.component";
+import { theme } from "../../theme/theme";
 
 interface IDogListProps {
   dogIds: string[];
@@ -87,8 +87,8 @@ const DogList: React.FunctionComponent<IDogListProps> = (props) => {
           <Text> Want to refine your search?</Text>
           <HoverCard.Target>
             <Button
-              variant="outline"
-              color={theme.colors?.green?.[9]}
+              variant="light"
+              color={theme.colors?.teal?.[1]}
               radius="xl"
             >
               Sort
@@ -122,7 +122,7 @@ const DogList: React.FunctionComponent<IDogListProps> = (props) => {
       <Group justify="center" mt="20px" mb="400px">
         <Button
           variant="filled"
-          color={theme.colors?.green?.[9]}
+          color={theme.colors?.teal?.[3]}
           radius="xl"
           disabled={!prevQuery}
           onClick={() => fetchDogs(selectedBreed, currentFrom - 25)}
@@ -131,7 +131,7 @@ const DogList: React.FunctionComponent<IDogListProps> = (props) => {
         </Button>
         <Button
           variant="filled"
-          color={theme.colors?.green?.[9]}
+          color={theme.colors?.teal?.[0]}
           radius="xl"
           disabled={!nextQuery}
           onClick={() => {
