@@ -1,17 +1,20 @@
 {
   "files": {
-    "main.css": "/Fetch-A-Friend/static/css/main.0d27a9f4.css",
-    "main.js": "/Fetch-A-Friend/static/js/main.679ef591.js",
+    "main.css": "/Fetch-A-Friend/static/css/main.771d502b.css",
+    "main.js": "/Fetch-A-Friend/static/js/main.5de714c4.js",
     "static/js/453.c92c3468.chunk.js": "/Fetch-A-Friend/static/js/453.c92c3468.chunk.js",
     "static/media/grass.png": "/Fetch-A-Friend/static/media/grass.8b4f96499d56a2286077.png",
-    "static/media/FetchAFriendLogo.jpg": "/Fetch-A-Friend/static/media/FetchAFriendLogo.8cc535b7ea192971600d.jpg",
+    "static/media/paw.png": "/Fetch-A-Friend/static/media/paw.5bb6931f31663ea91252.png",
+    "static/media/ball.png": "/Fetch-A-Friend/static/media/ball.5c90b9b007928dcb3bc9.png",
+    "static/media/FetchAFriendName.png": "/Fetch-A-Friend/static/media/FetchAFriendName.2a66eb89ea7eba3d5e32.png",
+    "static/media/FetchAFriendLogo.png": "/Fetch-A-Friend/static/media/FetchAFriendLogo.ac8b6b63ffd1f07d576c.png",
     "index.html": "/Fetch-A-Friend/index.html",
-    "main.0d27a9f4.css.map": "/Fetch-A-Friend/static/css/main.0d27a9f4.css.map",
-    "main.679ef591.js.map": "/Fetch-A-Friend/static/js/main.679ef591.js.map",
+    "main.771d502b.css.map": "/Fetch-A-Friend/static/css/main.771d502b.css.map",
+    "main.5de714c4.js.map": "/Fetch-A-Friend/static/js/main.5de714c4.js.map",
     "453.c92c3468.chunk.js.map": "/Fetch-A-Friend/static/js/453.c92c3468.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0d27a9f4.css",
-    "static/js/main.679ef591.js"
+    "static/css/main.771d502b.css",
+    "static/js/main.5de714c4.js"
   ]
 }
